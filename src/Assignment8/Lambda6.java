@@ -3,21 +3,21 @@ package Assignment8;
 import java.util.ArrayList;
 import java.util.function.UnaryOperator;
 
-class Op implements UnaryOperator<String> {
-		   public String apply(String str) {
-		      return str.toUpperCase();
-		   }
-		}
-		public class Lambda6 {
-		   public static void main(String[] args) {
-		      ArrayList<String> list = new ArrayList<>();
-		      list.add("Hi");
-		      list.add("i am");
-		      list.add("Venkteshwar");
-		      list.add("i am doing");
-		      list.add("good");
-		      System.out.println("Contents of the list before conversion: "+list);
-		      list.replaceAll(new Op());
-		      System.out.println("\nContents of the list after replace operation: "+list);
-		   }
-		}
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.UnaryOperator;
+
+public class Lambda6 { 
+
+	public static void main(String[] args) {
+		 
+		List<String> str = Arrays.asList("Nikhil", "Arjun","Piyush");
+		
+		UnaryOperator<String> unaryOperator = (list) -> list.toUpperCase();
+		
+		str.replaceAll(l -> unaryOperator.apply(l));
+		
+		 System.out.println(str);
+	}
+
+}

@@ -9,53 +9,43 @@ package Assignment7;
 	import java.util.*;
 
 
+	import java.lang.annotation.Annotation;
+	import java.lang.annotation.ElementType;
+	import java.lang.annotation.Retention;
+	import java.lang.annotation.RetentionPolicy;
+	import java.lang.annotation.Target;
+
+	public class Annotation2 {
+
+		public static void main(String[] args) {
+			 
+			//ClassDemo demoClass = new ClassDemo();	
+			
+			Annotation a = ClassDemo.class.getAnnotation(Info.class);
+			System.out.println(" "+a);
+
+		}
+	}
+
 
 	@Target(ElementType.TYPE)
 	@Retention (RetentionPolicy.RUNTIME)
 	@interface Info  {
+		    int AuthorID();
+			String Author()  default "Rahul";
+			String supervisor() default "ON=nkar";
+			String Date() default "04/11/2021";
+			String Time();
+			int Version();
+			String Description() default "Implimented project";	
+		}
+
+
+	@Info(AuthorID = 1, Time = "12pm", Version = 01)
+	class ClassDemo{
 		
-		    int AuthorID () default 1;
-			String Author()  default "Venkteshwar";
-			
-			String Date() default "03/11/2021";
-			String TIme() default "10:50";
-			int Version() default 12;
-			String Description() default "Hello to the custom annotation @Info";
+		 public void test() {
+			System.out.println("hello");
+		}
 		
-			
-			
-		}
-
-
-	@Info ()
-	class myclass{
-			
-			
-		}
-	public class Annotation2 {
-			
-		public static void main(String[] args) {
-				
-				myclass ns = new myclass();
-				
-			
-				Class f  = ns.getClass();
-				Annotation annn = f.getAnnotation(Info.class);
-				Info i = (Info)annn;
-				
-				
-				
-				System.out.println("AuthorID:"+i.AuthorID()); 
-				System.out.println("Author:"+i.Author()); 
-			
-				System.out.println("Date:"+i.Date()); 
-				System.out.println("Time:"+i.TIme()); 
-				System.out.println("Version:"+i.Version()); 
-				System.out.println("Description:"+i.Description()); 
-				
-				 
-			}
-
-		}
-
-
+	}
