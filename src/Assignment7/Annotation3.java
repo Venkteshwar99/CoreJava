@@ -11,55 +11,61 @@ package Assignment7;
 	import java.lang.reflect.*;  
 
 
+	import java.lang.annotation.ElementType;
+	import java.lang.annotation.Retention;
+	import java.lang.annotation.RetentionPolicy;
+	import java.lang.annotation.Target;
+	import java.lang.reflect.Method;
+	 
 
+	public class Annotation3 {
 
-	@Target(ElementType.METHOD)
-	@Retention(RetentionPolicy.RUNTIME)
-
-	@interface Execute{
-		
-		int Sequence() ;
-	}
-
-
-	class MyClass1{	
-		
-		  @Execute(Sequence=2)
-		  public void myMethod1()
-		      {
-			  System.out.println("In method1 giving priority to sequence 2");
-			  } 
-		  
-		  @Execute(Sequence=1)
-		  public void myMethod2()
-		      {
-			  System.out.println("In method2 giving priority to sequence 1");
-			  } 
-		  
-		  @Execute(Sequence=3)
-		  public void myMetho31()
-		      {
-			  System.out.println("In method3 giving priority to sequence 3");
-			  } 
-		  }
-		
-		
-
-	public class Annotation3{
-		
 		public static void main(String[] args) throws Exception {
 			
-			MyClass1 mc = new MyClass1();
+			MyClass obj = new MyClass();
 			
-			
-			Method e = mc.getClass().getMethod("myMethod1");
-			Annotation ann = e.getAnnotation(Execute.class);
-			Execute ts = (Execute)ann;
-			System.out.println( ts.Sequence());
-			
+			Method[] methods = obj.getClass().getDeclaredMethods();
+			 
+			for (int i = 1; i < methods.length+1; i++) {
+				
+				for(int j = 0; j<methods.length; j++) {
+				Execute ex = methods[j].getAnnotation(Execute.class);
+				if (ex.sequence()== i) {
+					methods[j].invoke(obj);
+				}
+				 
+				}
+				
+			}
 			
 		}
 
 	}
 
 
+	@Target(ElementType.METHOD)
+	@Retention(RetentionPolicy.RUNTIME)
+	@interface Execute{
+		int sequence();
+	}
+
+	class MyClass{	
+		
+		  @Execute(sequence=2)
+		  public void myMethod1()
+		      {
+			  System.out.println("Method : 1, Sequence : 2");
+			  } 
+		  
+		  @Execute(sequence=1)
+		  public void myMethod2()
+		      {
+			  System.out.println("Method : 2, Sequence : 1");
+			  } 
+		  
+		  @Execute(sequence=3)
+		  public void myMethod3()
+		      {
+			  System.out.println("Method : 3, Sequence : 3");
+			  } 
+		  }
